@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\FollowBall.cs" />
+     <Compile Include="Assets\Managers\GUIManager.cs" />
+     <Compile Include="Assets\Managers\GameEventManager.cs" />
      <Compile Include="Assets\Platforms\PlatformManager.cs" />
      <Compile Include="Assets\Rays.cs" />
      <Compile Include="Assets\Scripts\BallPhysics.cs" />
@@ -59,6 +61,7 @@
      <Compile Include="Assets\Scripts\Test.cs" />
      <Compile Include="Assets\Scripts\TornadoAnimator.cs" />
      <Compile Include="Assets\Scripts\TornadoMovement.cs" />
+     <Compile Include="Assets\ScrollUV.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

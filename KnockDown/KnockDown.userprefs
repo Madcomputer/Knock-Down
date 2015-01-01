@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Rays.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Managers/GUIManager.cs">
     <Files>
-      <File FileName="Assets\Rays.cs" Line="20" Column="66" />
-      <File FileName="Assets\Scripts\BallPhysics.cs" Line="25" Column="16" />
+      <File FileName="Assets/ScrollUV.cs" Line="12" Column="2" />
+      <File FileName="Assets/Managers/GameEventManager.cs" Line="27" Column="2" />
+      <File FileName="Assets/Managers/GUIManager.cs" Line="20" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
