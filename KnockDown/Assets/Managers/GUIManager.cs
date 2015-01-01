@@ -21,6 +21,11 @@ public class GUIManager : MonoBehaviour {
 		{
 			GameEventManager.TriggerGameStart();
 		}
+
+		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) 
+		{
+			GameEventManager.TriggerGameStart();
+		}
 	
 	}
 

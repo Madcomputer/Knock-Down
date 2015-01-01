@@ -26,6 +26,7 @@ public class BallPhysics : MonoBehaviour {
 
 	public bool isDestroyed;
 
+	public int health = 0;		//Health to ensure that conditions can be changed such as Line 168
 
 	public AudioClip jumpSound;
 	public AudioClip wallSound;
@@ -36,12 +37,46 @@ public class BallPhysics : MonoBehaviour {
 	/// </summary>
 	public static float distanceTraveled;
 
+
+	private Vector3 startPosition;
+
 	// Use this for initialization
 	void Start () 
 	{ 
+
+
 		isDestroyed = false;
 		level = 0;
 		tapped = false;
+
+
+
+		GameEventManager.GameStart += GameStart;
+		GameEventManager.GameOver += GameOver;
+		startPosition = transform.localPosition;
+		renderer.enabled = false;
+		rigidbody.isKinematic = true;
+		enabled = false;
+	}
+
+
+	//GameStart method
+	private void GameStart()
+	{
+		distanceTraveled = 0f;
+		transform.localPosition = startPosition;
+		renderer.enabled = true;
+		rigidbody.isKinematic = false;
+		enabled = true;
+		health++;
+	}
+
+	//Gameover method
+	private void GameOver()
+	{
+		renderer.enabled = false;
+		rigidbody.isKinematic = true;
+		enabled = false;
 	}
 
 	// Update is called once per frame
@@ -51,26 +86,6 @@ public class BallPhysics : MonoBehaviour {
 		distanceTraveled = transform.localPosition.y;
 
 
-		//Ball bounce
-		//When a touch screen is tapped and the ball is in contact with the floor
-		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began && grounded == true) 
-		{
-			//For going right
-			if(movement > 0f)
-			{
-				audio.PlayOneShot(jumpSound);
-				gameObject.rigidbody.AddForce(new Vector3(0, forceY, 0)); //Bounce up with magnitude of 'forceY'
-				tapped = true;			
-			}
-
-			//For going left
-			else if(movement < 0f)
-			{
-				audio.PlayOneShot(jumpSound);
-				gameObject.rigidbody.AddForce (new Vector3(0,forceY,0));
-				tapped = true;
-			}
-		}
 
 //Only applies to desktop editor
 #if UNITY_EDITOR
@@ -82,17 +97,49 @@ public class BallPhysics : MonoBehaviour {
 //Only applies to android phone
 #if UNITY_ANDROID
 		gameObject.rigidbody.AddForce (new Vector3(Input.acceleration.x * accelerometerSpeed , 0f, 0f));
+
+		//Ball bounce
+		//When a touch screen is tapped and the ball is in contact with the floor
+		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began && grounded == true) 
+		{
+			isDestroyed = false;
+			
+			//For going right
+			if(movement > 0f)
+			{
+				audio.PlayOneShot(jumpSound);
+				gameObject.rigidbody.AddForce(new Vector3(0, forceY, 0)); //Bounce up with magnitude of 'forceY'
+				tapped = true;			
+			}
+			
+			//For going left
+			else if(movement < 0f)
+			{
+				audio.PlayOneShot(jumpSound);
+				gameObject.rigidbody.AddForce (new Vector3(0,forceY,0));
+				tapped = true;
+			}
+			
+			
+		}
+
 #endif
 
 		//If the Jump button is pressed and the ball is touching the floor 
-		if (Input.GetButton("Jump") && grounded == true) 
+		if (Input.GetButton("Jump")) 
 		{
+			isDestroyed = false;
 
-		
-			audio.PlayOneShot(jumpSound);
-			gameObject.rigidbody.AddForce(new Vector3(0, forceY, 0));    //Ball bounces up 
-			tapped = true;
-			grounded = false;
+			if(grounded == true)
+			{
+				audio.PlayOneShot(jumpSound);
+				gameObject.rigidbody.AddForce(new Vector3(0, forceY, 0));    //Ball bounces up 
+				tapped = true;
+				grounded = false;
+			}
+
+			
+
 
 			//For self moving mechanic
 
@@ -118,10 +165,12 @@ public class BallPhysics : MonoBehaviour {
 
 
 		//When ball is destroyed, it calls the GameOver Event from the GameEventManager Script
-		if(isDestroyed)
+		if(health < 1)
 		{
 			GameEventManager.TriggerGameOver();
 		}
+
+
 
 
 	
@@ -189,6 +238,7 @@ public class BallPhysics : MonoBehaviour {
 			//Destroy (gameObject);
 			//movement = -movement;
 			level = 0;
+			health--; 
 			isDestroyed = true;
 
 			gameObject.transform.position = new Vector3(1.883953f, -4.130527f, 0f); //Return back to default position
