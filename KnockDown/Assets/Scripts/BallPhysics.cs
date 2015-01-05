@@ -251,6 +251,11 @@ public class BallPhysics : MonoBehaviour {
 			level++;
 
 		}
+
+		else if(collider.tag == "Star")
+		{
+			Destroy (collider.gameObject);
+		}
 	}
 
 
