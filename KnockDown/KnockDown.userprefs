@@ -1,8 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LevelDestroy.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\NewLevel.cs">
     <Files>
-      <File FileName="Assets/Scripts/LevelDestroy.cs" Line="1" Column="1" />
+      <File FileName="Assets\NewLevel.cs" Line="18" Column="4" />
+      <File FileName="Assets\Scripts\LevelDestroy.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BallPhysics.cs" Line="53" Column="3" />
+      <File FileName="Assets\Managers\GUIManager.cs" Line="9" Column="2" />
+      <File FileName="Assets\Scripts\TornadoMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AdvancedMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TornadoBehaiour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Managers\GameEventManager.cs" Line="14" Column="16" />
+      <File FileName="Assets\NewLevel.cs" Line="17" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

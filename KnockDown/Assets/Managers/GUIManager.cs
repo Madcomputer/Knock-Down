@@ -6,6 +6,7 @@ public class GUIManager : MonoBehaviour {
 
 	public GUIText gameOverText, instructionsText, runnerText;
 
+
 	// Use this for initialization
 	void Start () 
 	{

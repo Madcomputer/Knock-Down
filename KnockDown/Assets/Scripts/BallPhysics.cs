@@ -11,6 +11,11 @@ public class BallPhysics : MonoBehaviour {
 	public int forceY;
 	public int forceX;
 
+
+	//Ball's transform values
+	public float xPosition;
+	public float yPosition;
+
 	//Speed values used to vary the ball's speed
 	public float movement;
 	public float accelerometerSpeed;
@@ -26,6 +31,8 @@ public class BallPhysics : MonoBehaviour {
 
 	public bool isDestroyed;
 
+	public bool wonGame = false;
+
 	public int health = 0;		//Health to ensure that conditions can be changed such as Line 168
 
 	public AudioClip jumpSound;
@@ -40,9 +47,16 @@ public class BallPhysics : MonoBehaviour {
 
 	private Vector3 startPosition;
 
+	void Awake()
+	{
+		//GameEventManager.TriggerGameStart();
+		DontDestroyOnLoad (this.gameObject);
+	}
 	// Use this for initialization
 	void Start () 
 	{ 
+		//xPosition = transform.position.x;
+		//yPosition = transform.position.y;
 
 
 		isDestroyed = false;
@@ -53,6 +67,7 @@ public class BallPhysics : MonoBehaviour {
 
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
+		//GameEventManager.GameWon += GameWon;
 		startPosition = transform.localPosition;
 		renderer.enabled = false;
 		rigidbody.isKinematic = true;
@@ -77,6 +92,11 @@ public class BallPhysics : MonoBehaviour {
 		renderer.enabled = false;
 		rigidbody.isKinematic = true;
 		enabled = false;
+	}
+
+	private void GameWon()
+	{
+
 	}
 
 	// Update is called once per frame
@@ -198,16 +218,19 @@ public class BallPhysics : MonoBehaviour {
 			
 		}
 
-		//Jumping restriction
-		if (col.collider.tag == "Floor") 
+		else if (col.collider.tag == "Tornado") 
 		{
-			//grounded = true;
-				
-		} 
-
-		else if (col.collider.tag == "Wall_Right" || col.collider.tag == "Wall_Left") 
-		{
-			//grounded = true;
+			if(transform.position.x < col.collider.transform.position.x)
+			{
+				gameObject.rigidbody.AddForce(new Vector3(Random.Range (-50f,-70f),0,0));
+				Debug.Log ("Flung Left");
+			}
+			
+			else if(transform.position.x > col.collider.transform.position.x)
+			{
+				gameObject.rigidbody.AddForce(new Vector3(Random.Range(50f,70f),0,0));
+				Debug.Log ("Flung Right");
+			}
 		}
 
 		else 
@@ -246,9 +269,29 @@ public class BallPhysics : MonoBehaviour {
 			Handheld.Vibrate(); //Vibrates mobile device
 		}
 
+		/*
+		 if (collider.tag == "Tornado") 
+		{
+			if(transform.position.x < collider.transform.position.x)
+			{
+				gameObject.rigidbody.AddForce(new Vector3(Random.Range (-50f,-70f),0,0));
+				Debug.Log ("Flung Left");
+			}
+
+			else if(transform.position.x > collider.transform.position.x)
+			{
+				gameObject.rigidbody.AddForce(new Vector3(Random.Range(50f,70f),0,0));
+				Debug.Log ("Flung Right");
+			}
+		}
+		*/
+
 		else if(collider.tag == "LevelUp")
 		{
-			level++;
+			//GameEventManager.TriggerGameOver();
+			//Application.LoadLevel("8.0_NextStage");
+			wonGame = true;
+			Debug.Log("Next Level");
 
 		}
 

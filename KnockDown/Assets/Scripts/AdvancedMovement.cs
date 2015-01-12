@@ -1,0 +1,49 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class AdvancedMovement : MonoBehaviour {
+	
+	public Vector3 pointB;
+	public Vector3 stopPointA;
+	public float time;
+	public float stopTime;
+	
+	
+	IEnumerator Start () 
+	{
+		Vector3 pointA = transform.position;
+		
+		while (true) 
+		{
+
+			yield return StartCoroutine(MoveObject(transform, pointA, pointA, time));
+			yield return StartCoroutine(MoveObject(transform, pointA, pointB, time));
+			yield return StartCoroutine(MoveObject(transform, pointB, pointB, time));
+			yield return StartCoroutine(MoveObject(transform, pointB, pointA, time));
+
+
+
+			/*
+			 *  yield return StartCoroutine(MoveObject(transform, stopPointA, stopPointA, stopTime));
+				yield return StartCoroutine(MoveObject(transform, stopPointA, pointB, time));
+				yield return StartCoroutine(MoveObject(transform, pointB, stopPointA, time));
+				yield return StartCoroutine(MoveObject(transform, stopPointA, stopPointA, stopTime));
+				yield return StartCoroutine(MoveObject(transform, stopPointA, pointA, time));
+			*/
+
+		}
+	}
+	
+	IEnumerator MoveObject (Transform thisTransform, Vector3 startPos, Vector3 endPos, float time) 
+	{
+		float i = 0.0f;
+		float rate = 1.0f / time;
+		
+		while (i < 1.0f) 
+		{
+			i += Time.deltaTime * rate;
+			thisTransform.position = Vector3.Lerp(startPos, endPos, i);
+			yield return null; 
+		}
+	}
+}

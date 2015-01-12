@@ -5,7 +5,7 @@ public static class GameEventManager {
 
 	public delegate void GameEvent();
 
-	public static event GameEvent GameStart, GameOver;
+	public static event GameEvent GameStart, GameOver, GameWon;
 
 	public static void TriggerGameStart()
 	{
@@ -20,6 +20,14 @@ public static class GameEventManager {
 		if(GameOver != null)
 		{
 			GameOver();
+		}
+	}
+
+	public static void TriggerGameWon()
+	{
+		if (GameWon != null) 
+		{
+			GameWon();		
 		}
 	}
 
